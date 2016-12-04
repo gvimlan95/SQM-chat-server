@@ -38,13 +38,13 @@ public class Connection implements Runnable {
             System.exit(-1);
         }
         running = true;
-        this.sendOverConnection("OK Welcome to the chat server, there are currently " + serverReference.getNumberOfUsers() + " user(s) online");
+        this.sendOverConnection("WCS1: Welcome to the chat server, there are currently " + serverReference.getNumberOfUsers() + " user(s) online");
         while(running) {
             try {
                 line = in.readLine();
                 validateMessage(line);
             } catch (IOException e) {
-                System.out.println("Read failed");
+                System.out.println("Error: Read failed");
                 System.exit(-1);
             }
         }
@@ -53,7 +53,7 @@ public class Connection implements Runnable {
     private void validateMessage(String message) {
 
         if(message.length() < 4){
-            sendOverConnection ("BAD invalid command to server");
+            sendOverConnection ("Error: invalid command to server");
         } else {
             switch(message.substring(0,4)){
                 case "LIST":
@@ -81,7 +81,7 @@ public class Connection implements Runnable {
                     break;
 
                 default:
-                    sendOverConnection("BAD command not recognised");
+                    sendOverConnection("Error: command not recognised");
                     break;
             }
         }
@@ -114,7 +114,7 @@ public class Connection implements Runnable {
                 break;
 
             case STATE_UNREGISTERED:
-                sendOverConnection("BAD You have not logged in yet");
+                sendOverConnection("Error: You have not logged in yet");
                 break;
         }
 
@@ -123,13 +123,13 @@ public class Connection implements Runnable {
     private void iden(String message) {
         switch(state) {
             case STATE_REGISTERED:
-                sendOverConnection("REGR you are already registerd with username " + username);
+                sendOverConnection("Error: you are already registerd with username " + username);
                 break;
 
             case STATE_UNREGISTERED:
                 String username = message.split(" ")[0];
                 if(serverReference.doesUserExist(username)) {
-                    sendOverConnection("REGUNT username is already taken");
+                    sendOverConnection("Error: username is already taken\n");
                 } else {
                     this.username = username;
                     state = STATE_REGISTERED;
@@ -147,7 +147,7 @@ public class Connection implements Runnable {
                 break;
 
             case STATE_UNREGISTERED:
-                sendOverConnection("BAD You have not logged in yet");
+                sendOverConnection("Error: You have not logged in yet");
                 break;
         }
     }
@@ -168,16 +168,16 @@ public class Connection implements Runnable {
                     if(serverReference.sendPrivateMessage("PM from " + username + ":" + pm, user)){
                         sendOverConnection("MESGSENT your message has been sent");
                     } else {
-                        sendOverConnection("BAD the user does not exist");
+                        sendOverConnection("Error: the user does not exist");
                     }
                 }
                 else{
-                    sendOverConnection("BAD Your message is badly formatted");
+                    sendOverConnection("Error: Your message is Error:ly formatted");
                 }
                 break;
 
             case STATE_UNREGISTERED:
-                sendOverConnection("BAD You have not logged in yet");
+                sendOverConnection("Error: You have not logged in yet");
                 break;
         }
     }

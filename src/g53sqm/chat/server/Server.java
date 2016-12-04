@@ -36,6 +36,31 @@ public class Server {
 		}
 	}
 
+//	public void createServer(int port){
+//		try {
+//			server = new ServerSocket(port);
+//			System.out.println("Server has been initialised on port " + port);
+//		}
+//		catch (IOException e) {
+//			System.err.println("error initialising server");
+//			e.printStackTrace();
+//		}
+//		list = new ArrayList<Connection>();
+//		while(true) {
+//			Connection c = null;
+//			try {
+//				c = new Connection(server.accept(), this);
+//			}
+//			catch (IOException e) {
+//				System.err.println("error setting up new client conneciton");
+//				e.printStackTrace();
+//			}
+//			Thread t = new Thread(c);
+//			t.start();
+//			list.add(c);
+//		}
+//	}
+
 	public ArrayList<String> getUserList() {
 		ArrayList<String> userList = new ArrayList<String>();
 		for( Connection clientThread: list){
