@@ -34,7 +34,7 @@ public class Connection implements Runnable {
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(client.getOutputStream(), true);
         } catch (IOException e) {
-            System.out.println("in or out failed");
+            System.out.println("Error: in or out failed");
             System.exit(-1);
         }
         running = true;
